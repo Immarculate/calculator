@@ -11,6 +11,29 @@ export const ACTION = {
   EVALUATE: 'evaluate',
 };
 
+function evaluate({ previousOperand, currentOperand, operation }) {
+    const prev = parseFloat(previousOperand);
+    const current = parseFloat(currentOperand);
+    if (isNaN(prev) || isNaN(current)) return '';
+    let computation = '';
+    // eslint-disable-next-line default-case
+    switch (operation) {
+      case '+':
+        computation = prev + current;
+        break;
+      case '-':
+        computation = prev - current;
+        break;
+      case '*':
+        computation = prev * current;
+        break;
+      case '÷':
+        computation = prev / current;
+        break;
+    }
+    return computation.toString();
+  }
+
 function reducer(state, { type, payload }) {
   // eslint-disable-next-line default-case
   switch (type) {
@@ -53,29 +76,6 @@ function reducer(state, { type, payload }) {
         operation: payload.operation,
         currentOperand: null,
       };
-
-      function evaluate({ previousOperand, currentOperand, operation }) {
-        const prev = parseFloat(previousOperand);
-        const current = parseFloat(currentOperand);
-        if (isNaN(prev) || isNaN(current)) return '';
-        let computation = '';
-        // eslint-disable-next-line default-case
-        switch (operation) {
-          case '+':
-            computation = prev + current;
-            break;
-          case '-':
-            computation = prev - current;
-            break;
-          case '*':
-            computation = prev * current;
-            break;
-          case '÷':
-            computation = prev / current;
-            break;
-        }
-        return computation.toString();
-      }
     case ACTION.CLEAR:
       return {};
     case ACTION.DELETE_DIGIT:
